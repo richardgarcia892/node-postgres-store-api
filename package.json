@@ -19,7 +19,6 @@
     "eslint": "^8.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "faker": "^5.5.3",
     "nodemon": "^2.0.14",
     "prettier": "^2.4.1"
   },
@@ -29,6 +28,7 @@
     "express": "^4.17.1",
     "helmet": "^4.6.0",
     "joi": "^17.4.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "faker": "^5.5.3"
   }
 }
