@@ -9,6 +9,7 @@ const app = express()
 const port = process.env.PORT || 3000;
 
 // Configuracion de CORS
+
 const corsWhiteList = ['http://localhost:8080']
 const corsOptions = {
   origin: (origin, callback) => {
@@ -19,7 +20,7 @@ const corsOptions = {
 }
 
 app.use(morgan('tiny'))
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(helmet())
 app.use(express.json()) // Permite recibir los request JSON en POST
 
