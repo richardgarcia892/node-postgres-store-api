@@ -9,7 +9,8 @@
     "lint": "eslint"
   },
   "engines": {
-    "node": "17.x"
+    "node": "17.0.1",
+    "npm": "8.1.0"
   },
   "keywords": [],
   "author": "",
