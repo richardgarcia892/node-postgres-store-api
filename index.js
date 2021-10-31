@@ -1,35 +1,44 @@
-const express = require('express')
-const routerApi = require('./routes')
-const cors = require('cors')
-const morgan = require('morgan')
+const express = require('express');
+const cors = require('cors');
 const helmet = require('helmet')
-const { logError, errorHandler, boomErrorHandled } = require('./middleware/error.handler')
+const routerApi = require('./routes');
 
-const app = express()
+
+const { logError, errorHandler, boomErrorHandled } = require('./middleware/error.handler');
+
+const app = express();
 const port = process.env.PORT || 3000;
 
-// Configuracion de CORS
+app.use(express.json());
 
-const corsWhiteList = ['http://localhost:8080']
+const corsWhitelist = ['http://localhost:8080', 'https://myapp.co'];
 const corsOptions = {
   origin: (origin, callback) => {
-    if (corsWhiteList.includes(origin) || !origin) {
-      callback(null, true)
-    } else { callback(new Error('no permitido')) }
+    if (corsWhitelist.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('no permitido'));
+    }
   }
 }
-
-app.use(morgan('tiny'))
-app.use(cors())
+app.use(cors(corsOptions));
 app.use(helmet())
-app.use(express.json()) // Permite recibir los request JSON en POST
 
-routerApi(app)
+app.get('/', (req, res) => {
+  res.send('Hola mi server en express');
+});
 
-app.use(logError)
-app.use(boomErrorHandled)
-app.use(errorHandler)
+app.get('/nueva-ruta', (req, res) => {
+  res.send('Hola, soy una nueva ruta');
+});
 
-app.listen(port, () =>
-  console.log(`App running on port ${port}`)
-)
+routerApi(app);
+
+app.use(logError);
+app.use(boomErrorHandled);
+app.use(errorHandler);
+
+
+app.listen(port, () => {
+  console.log('Mi port' + port);
+});
