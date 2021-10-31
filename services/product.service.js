@@ -1,13 +1,15 @@
 const faker = require('faker')
 const boom = require('@hapi/boom')
+const sequelize = require('../libs/sequelize')
 
 class ProductsService {
   constructor() {
     this.products = [];
     this.generate()
+    this.sequelize = sequelize
   }
 
-  async generate() {
+  generate() {
     const limit = 100
     for (let index = 0; index < limit; index++) {
       this.products.push({
@@ -45,7 +47,9 @@ class ProductsService {
   }
 
   async find() {
-    return this.products
+    const query = 'select * from tasks'
+    const [data, metadata] = await this.sequelize.query(query)
+    return { data, metadata }
   }
 
   async findOne(id) {
@@ -77,8 +81,8 @@ class ProductsService {
     return this.products[index]
   }
 
-  delete(id) {
-    const index = this.findProductIndex(id)
+  async delete(id) {
+    const index = await this.findProductIndex(id)
     this.products.splice(index, 1)
     return { id }
   }
